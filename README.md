@@ -1,4 +1,4 @@
-# EvolveNav: Self-Improving Embodied Reasoning for LLM-Based Vision-Language Navigation
+# EvolveNav: Empowering LLM-Based Vision-Language Navigation via Self-Improving Embodied Reasoning
 
 
 <div align="center">
@@ -10,14 +10,18 @@
 <a target="_blank" href="https://rongtao-xu.github.io/">Rongtao Xu</a><sup>3</sup>,
 <a href="https://openreview.net/profile?id=~Minzhe_Niu1" target="_blank">Minzhe Niu</a><sup>4</sup>,
 <a href="https://scholar.google.com/citations?user=OEPMQEMAAAAJ&hl=en" target="_blank">Jianhua Han</a><sup>4</sup>,
+<a target="_blank" href="https://personal.ntu.edu.sg/hanwangzhang/">Hanwang Zhang</a><sup>5</sup>,
 <a target="_blank" href="http://www.linliang.net/">Liang Lin</a><sup>2</sup>,
+<a target="_blank" href="https://www.sigs.tsinghua.edu.cn/cbk/main.htm">Bokui Chen</a><sup>6&ddagger;</sup>,
 <a target="_blank" href="https://www.mvig.org/">Cewu Lu</a><sup>1&ddagger;</sup>,
 <a target="_blank" href="https://scholar.google.com/citations?user=voxznZAAAAAJ">Xiaodan Liang</a><sup>2&ddagger;</sup>
 
 <sup>1</sup>Shanghai Jiao Tong University</span>
 <sup>2</sup>Sun Yat-Sen University</span>
 <sup>3</sup>Mohamed bin Zayed University of Artificial Intelligence</span>
-<sup>4</sup>Huawei Noah’s Ark Lab</span>
+<sup>4</sup>Yinwang Intelligent Technology</span>
+<sup>5</sup>Nanyang Technological University</span>
+<sup>6</sup>Tsinghua University</span>
 <br/>
 <sup>*</sup>Equal contribution.
 <sup>&ddagger;</sup> Corresponding author.
@@ -29,7 +33,7 @@
     <img src="https://img.shields.io/badge/Paper-arXiv-deepgreen" alt="Paper arXiv"></a>
 </div>
 
-Building Vision-Language Navigation (VLN) agents which can navigate following natural language instructions is a long-standing goal in human-robot interaction applications. Recent studies have revealed the potential of training open-source Large Language Models (LLMs) to unleash LLMs' reasoning ability for improving navigation, and simultaneously mitigate the domain gap between LLMs' training corpus and the VLN task. However, these approaches primarily adopt direct input-output mapping paradigms, causing the mapping learning difficult and the navigational decisions unexplainable. Chain-of-Thought (CoT) training is a promising way to improve both navigational decision accuracy and interpretability, while the complexity of the navigation task makes the perfect CoT labels unavailable and may lead to overfitting through pure CoT supervised fine-tuning. In this paper, we propose a novel sElf-improving embodied reasoning framework for boosting LLM-based vision-language Navigation, dubbed EvolveNav. Our EvolveNav consists of two stages: (1) Formalized CoT Supervised Fine-Tuning, where we train the model with formalized CoT labels to both activate the model's navigational reasoning capabilities and increase the reasoning speed; (2) Self-Reflective Post-Training, where the model is iteratively trained with its own reasoning outputs as self-enriched CoT labels to enhance the supervision diversity. A self-reflective auxiliary task is also introduced to encourage learning correct reasoning patterns by contrasting with wrong ones. Experimental results on the popular VLN benchmarks demonstrate the superiority of EvolveNav over previous LLM-based VLN approaches.
+Recent studies have revealed the potential of training open-source Large Language Models (LLMs) to unleash LLMs' reasoning ability for enhancing vision-language navigation (VLN) performance, and simultaneously mitigate the domain gap between LLMs' training corpus and the VLN task. However, these approaches predominantly adopt straightforward input-output mapping paradigms, causing the mapping learning difficult and the navigational decisions unexplainable. Chain-of-Thought (CoT) training is a promising way to improve both navigational decision accuracy and interpretability, while the complexity of the navigation task makes the perfect CoT labels unavailable and may lead to overfitting through pure CoT supervised fine-tuning. To address these issues, we propose EvolveNav, a novel sElf-improving embodied reasoning paradigm that realizes adaptable and generalizable navigational reasoning for boosting LLM-based vision-language Navigation. Specifically, EvolveNav involves a two-stage training process: (1) Formalized CoT Supervised Fine-Tuning, where we train the model with curated formalized CoT labels to first activate the model's navigational reasoning capabilities, and simultaneously increase the reasoning speed; (2) Self-Reflective Post-Training, where the model is iteratively trained with its own reasoning outputs as self-enriched CoT labels to enhance the supervision diversity. A self-reflective auxiliary task is also designed to encourage the model to learn correct reasoning patterns by contrasting with wrong ones. Experimental results under both task-specific and cross-task training paradigms demonstrate the consistent superiority of EvolveNav over previous LLM-based VLN approaches on various popular benchmarks, including R2R, REVERIE, CVDN, and SOON. EvolveNav open avenues for exploring effective self-improving reasoning paradigms, enabling building agents capable of self-evolving for promoting LLM-based embodied AI research.
 
 
 ![motivation](files/overview.png)
