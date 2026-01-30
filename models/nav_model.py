@@ -16,8 +16,8 @@ import os
 
 def init_vis_config(args, config):
     #cfg_name = 'bert-large-uncased'
-    cfg_name = os.path.join(args.data_dir, 'bert-large-uncased')
-    vis_config = PretrainedConfig.from_pretrained(cfg_name)
+    cfg_path = './data/models/bert-base-uncased'
+    vis_config = PretrainedConfig.from_pretrained(cfg_path)
     vis_config.num_pano_layers = config.num_pano_layers
     vis_config.precision = args.precision
     vis_config.pretrained_model_name_or_path = args.pretrained_model_name_or_path
@@ -48,6 +48,10 @@ class NavModel(nn.Module):
                 else ModifiedLlamaForCausalLM.from_pretrained(config.pretrained_model_name_or_path, config)
         
         self.lang_model.init_tokenizer(config.pretrained_model_name_or_path)
+
+        # # ⭐⭐ 在这里冻结语言模型（LLM） ⭐⭐
+        # for p in self.lang_model.parameters():
+        #     p.requires_grad = False
 
         self.hidden_size = self.lang_model.hidden_size
         self.model_type = self.lang_model.model_type
@@ -93,11 +97,10 @@ class NavModel(nn.Module):
 
         logger.info("model type: {}".format(self.model_type))
 
-
-
     def prepare_direction_landmark_dict(self, cot_summarization):
 
         direction_landmark_dict = []
+        bs = len(cot_summarization)
 
         for i in range(bs):
             directions = list(cot_summarization[i].keys())
@@ -106,7 +109,6 @@ class NavModel(nn.Module):
                 direction_landmark_dict_i[direction] = f"[{', '.join(cot_summarization[i][direction]['landmarks'])}]"
             direction_landmark_dict.append(direction_landmark_dict_i)
         return direction_landmark_dict
-
 
     def forward(self, mode: str, batch: Dict[str, Any], **kwargs) -> Dict[str, Any]:
         batch = collections.defaultdict(lambda: None, batch)
@@ -147,7 +149,6 @@ class NavModel(nn.Module):
         else:
             raise NotImplementedError('wrong mode: %s' % mode)
     
-
     def forward_navigation(
         self, 
         mode, 
@@ -267,9 +268,7 @@ class NavModel(nn.Module):
             'fuse_embeds': fuse_embeds.detach(),
             'fuse_logits': fuse_logits,
         }
-
-    
-
+  
     def forward_summarization(
         self, 
         mode, 
@@ -364,7 +363,6 @@ class NavModel(nn.Module):
 
         return outputs
         
-
     def forward_3dqa(
         self, 
         mode, 
@@ -424,7 +422,6 @@ class NavModel(nn.Module):
             }
 
         return outputs
-
 
     def forward_object_grounding(
         self, 
@@ -582,7 +579,7 @@ class NavModel(nn.Module):
         all_text = []
 
 
-        direction_landmark_dict = self.prepare_direction_landmark_dict(batch["cot_summarization"])
+        direction_landmark_dict = self.prepare_direction_landmark_dict(batch["landmark_direction"])
 
 
         for bn in range(batch_size):
@@ -738,7 +735,7 @@ class NavModel(nn.Module):
 
         all_text = []
 
-        direction_landmark_dict = self.prepare_direction_landmark_dict(batch["cot_summarization"])
+        direction_landmark_dict = self.prepare_direction_landmark_dict(batch["landmark_direction"])
 
         for bn in range(batch_size):
             prompt = batch["prompts"][bn]

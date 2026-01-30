@@ -13,6 +13,7 @@
 torchrun --nnodes=1 --nproc_per_node=4 --master_port 41000 train_wlora_new.py \
     --stage finetune --cfg_file configs/r2r.yaml \
     --data_dir data --pretrained_model_name_or_path data/models/Vicuna-7B --precision amp_bf16 \
+    --resume_from_checkpoint ./data/models/NaviLLM/model_without_pretrain.pt \
     --batch_size 1 --gradient_accumulation_step 16 --num_steps_per_epoch 300 --lr 3e-5 --seed 0 --num_epochs 60 \
     --enable_summarize --enable_fgr2r \
     --test_datasets R2R \

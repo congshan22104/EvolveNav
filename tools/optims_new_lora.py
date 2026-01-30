@@ -68,7 +68,7 @@ def dist_models(args, model, logger):
     device_id = args.rank % total_gpus
 
 
-    if (args.resume_from_checkpoint is not None and "lora" not in args.resume_from_checkpoint) or args.base_model is not None:
+    if (args.resume_from_checkpoint is not None and "lora" not in args.resume_from_checkpoint):
         if args.rank == 0:
             logger.info(f"Loading checkpoint from {args.resume_from_checkpoint}")
         checkpoint = torch.load(args.resume_from_checkpoint, map_location="cpu")

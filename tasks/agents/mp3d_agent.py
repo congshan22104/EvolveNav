@@ -287,9 +287,9 @@ class MP3DAgent(BaseAgent):
             gt_vpid = nav_vpids[i][nav_target]
             if gt_vpid is not None:
 
-                direction_of_gt = self.get_direction_vp(gmaps[i].node_positions[obs[i]['viewpoint']], gmaps[i].node_positions[gt_vpid], obs[i]['heading'], obs[i]['elevation'], use_mapping=True)
+                direction_of_gt = self.get_direction_vp(gmaps[i].node_positions[obs[i]['viewpoint']], gmaps[i].node_positions[gt_vpid], obs[i]['heading'], use_mapping=True)
                 direction_of_gt_list.append(direction_of_gt)
-                action_of_gt = ' '.join(self.get_direction_vp(gmaps[i].node_positions[obs[i]['viewpoint']], gmaps[i].node_positions[gt_vpid], obs[i]['heading'], obs[i]['elevation']).split(' ')[:-1])
+                action_of_gt = ' '.join(self.get_direction_vp(gmaps[i].node_positions[obs[i]['viewpoint']], gmaps[i].node_positions[gt_vpid], obs[i]['heading']).split(' ')[:-1])
 
                 landmarks_of_gt = landmark_direction[i][action_of_gt]['landmarks']
 
@@ -319,7 +319,7 @@ class MP3DAgent(BaseAgent):
             for j, vp in enumerate(cur_nav_vpids):
                 if j > 0 :
                     vp_direction =' '.join(self.get_direction_vp(gmaps[i].node_positions[obs[i]['viewpoint']],
-                                                      gmaps[i].node_positions[vp], obs[i]['heading'], obs[i]['elevation']).split(' ')[:2]) # delete 'to' in direction
+                                                      gmaps[i].node_positions[vp], obs[i]['heading']).split(' ')[:2]) # delete 'to' in direction
 
                     if vp_direction not in summary:
                         summary[vp_direction] = {}
@@ -895,7 +895,7 @@ class MP3DAgent(BaseAgent):
 
                 nav_inputs.update({
                 "landmark_direction": self.prepare_landmark_direction(obs,
-                                                      nav_vpids=nav_vpids, nav_targets=nav_targets,
+                                                      nav_vpids=nav_vpids,
                                                       gmaps=gmaps, vp_landmarks=vp_landmarks,cand_masks=cand_masks
                                                       )})
 
@@ -1060,7 +1060,7 @@ class MP3DAgent(BaseAgent):
 
                     nav_inputs.update({
                     "landmark_direction": self.prepare_landmark_direction(obs,
-                                                          nav_vpids=nav_vpids, nav_targets=nav_targets,
+                                                          nav_vpids=nav_vpids,
                                                           gmaps=gmaps, vp_landmarks=vp_landmarks,cand_masks=cand_masks
                                                           )})
 

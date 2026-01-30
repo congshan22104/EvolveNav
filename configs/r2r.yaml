@@ -35,6 +35,12 @@ Finetune:
   LOSS_COEF: {
   }
 
+Pretrain:
+  SOURCE: ['R2R']
+  Ratio: [1]
+  LOSS_COEF: {
+  }
+
 
 Model:
   num_l_layers: 9

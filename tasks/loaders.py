@@ -44,7 +44,6 @@ def create_dataloaders(args, config, logger, training, device, feat_db=None, obj
 
         dataset.init_feat_db(feat_db=task_feat_db, obj_feat_db=task_obj_feat_db)
 
-
         logger.info(f"{task_name}: {len(dataset)} samples loaded")
 
         task_loader, pre_epoch = build_dataloader(
@@ -59,7 +58,12 @@ def create_dataloaders(args, config, logger, training, device, feat_db=None, obj
             dataloaders[task_name] = PrefetchLoader(task_loader, device=device)
 
         # load agents
-        agents[task_name] = load_agent(task_name.lower(), args, getattr(dataset, "shortest_distances", None), getattr(dataset, "shortest_paths", None))
+        agents[task_name] = load_agent(
+            task_name.lower(), 
+            args, 
+            getattr(dataset, "shortest_distances", None), 
+            getattr(dataset, "shortest_paths", None)
+        )
 
 
     if training:

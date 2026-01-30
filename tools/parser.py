@@ -102,7 +102,7 @@ def read_args():
 
     # training
     parser.add_argument('--mode', type=str, default="train", choices=["train", "test"])
-    parser.add_argument("--stage", type=str, required=True, choices=["pretrain", "multi"])
+    parser.add_argument("--stage", type=str, required=True, choices=["finetune", "multi", "pretrain"])
     parser.add_argument('--ignoreid', default=-100, type=int, help="criterion: ignore label")
     parser.add_argument('--enable_og', action='store_true', default=False, help="object grounding task")
     parser.add_argument("--enable_summarize", action="store_true", help="perform EQA or generate instructions")

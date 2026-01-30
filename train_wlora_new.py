@@ -236,6 +236,13 @@ def main():
         training=False, device=device_id, feat_db=feat_db, obj_feat_db=obj_feat_db, stage="finetune"
     )
 
+    # logger.info("**************************** DATASET ****************************")
+    # logger.info("[DATASET DEBUG]")
+    # logger.info("train dataset repr        : %s", train_dataloaders.dataset)
+    # logger.info("train dataset type        : %s", type(train_dataloaders.dataset))
+    # logger.info("val dataset repr        : %s", val_dataloaders.dataset)
+    # logger.info("val dataset type        : %s", type(val_dataloaders.dataset))
+
     # Model
     model = NavModel(args, logger, global_cfg.Model)
 

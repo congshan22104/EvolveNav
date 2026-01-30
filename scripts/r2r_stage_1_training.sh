@@ -7,13 +7,27 @@
 # export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 
 # activate environment
-# conda activate navillm
+conda activate evolvenav
 
 # training for 30 epochs
-torchrun --nnodes=1 --nproc_per_node=8 --master_port 41000 train.py \
-    --stage finetune --cfg_file configs/r2r.yaml \
+# torchrun --nnodes=1 --nproc_per_node=4 --master_port 41000 train.py \
+#     --stage pretrain --cfg_file configs/r2r.yaml \
+#     --data_dir data --pretrained_model_name_or_path data/models/Vicuna-7B --precision amp_bf16 \
+#     --batch_size 1 --gradient_accumulation_step 8 --num_steps_per_epoch 2000 --lr 3e-5 --seed 0 --num_epochs 30 \
+#     --enable_summarize --enable_fgr2r \
+#     --test_datasets R2R \
+#     --max_saved_checkpoints 1 --output_dir output/r2r_stage_1_training
+
+torchrun --nnodes=1 --nproc_per_node=4 --master_port 41000 train_wlora_new.py \
+    --stage pretrain --cfg_file configs/r2r.yaml \
     --data_dir data --pretrained_model_name_or_path data/models/Vicuna-7B --precision amp_bf16 \
-    --batch_size 1 --gradient_accumulation_step 8 --num_steps_per_epoch 2000 --lr 3e-5 --seed 0 --num_epochs 30 \
+    --resume_from_checkpoint ./data/models/NaviLLM/model_without_pretrain.pt \
+    --batch_size 1 --gradient_accumulation_step 16 --num_steps_per_epoch 300 --lr 3e-5 --seed 0 --num_epochs 60 \
     --enable_summarize --enable_fgr2r \
     --test_datasets R2R \
+    --enable_lora \
+    --lora_r 128 --lora_alpha 256 --lora_dropout 0.05 \
+    --lora_target_modules "all_linear" \
+    --lora_bias "none" \
+    --Stage_2_training \
     --max_saved_checkpoints 1 --output_dir output/r2r_stage_1_training
