@@ -1,0 +1,9 @@
+# core dump files
+core
+core.*
+
+# output directory
+output/
+
+# data directory
+data/
